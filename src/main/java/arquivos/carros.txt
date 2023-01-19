@@ -1,0 +1,29 @@
+[
+  {
+    "placa": "DME-6091",
+    "tipoVeiculo": "CARRO",
+    "statusVeiculo": "DISPONIVEL",
+    "marca": "FIAT",
+    "modelo": "PALIO",
+    "anoDeFabricao": 2004,
+    "IdAgencia": 1
+  },
+  {
+    "placa": "HHX-7985",
+    "tipoVeiculo": "CARRO",
+    "statusVeiculo": "DISPONIVEL",
+    "marca": "FIAT",
+    "modelo": "IDEIA",
+    "anoDeFabricao": 2014,
+    "IdAgencia": 0
+  },
+  {
+    "placa": "AAA-0000",
+    "tipoVeiculo": "CARRO",
+    "statusVeiculo": "DISPONIVEL",
+    "marca": "FORD",
+    "modelo": "KA",
+    "anoDeFabricao": 2020,
+    "IdAgencia": 0
+  }
+]
