@@ -1,10 +1,11 @@
 package br.com.locatecar.grupoii.veiculos.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.locatecar.grupoii.agencia.model.Agencia;
 
-public abstract class Veiculos {
+public abstract class Veiculo {
 	
 	private String placa;
 	private TipoVeiculo tipoVeiculo;
@@ -79,6 +80,7 @@ public abstract class Veiculos {
 		this.historicoAluguel = historicoAluguel;
 	}
 
+	public abstract BigDecimal getValorDiaria();
 	
 	@Override
 	public String toString() {

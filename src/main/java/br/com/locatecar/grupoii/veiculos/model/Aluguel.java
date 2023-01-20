@@ -2,9 +2,9 @@ package br.com.locatecar.grupoii.veiculos.model;
 
 import java.time.LocalDate;
 
-public class Alugel {
+public class Aluguel {
     private Cliente cliente;
-    private Veiculos veiculos;
+    private Veiculo veiculos;
 
     private LocalDate dataAlugel;
 
@@ -18,11 +18,11 @@ public class Alugel {
         this.cliente = cliente;
     }
 
-    public Veiculos getVeiculos() {
+    public Veiculo getVeiculos() {
         return veiculos;
     }
 
-    public void setVeiculo(Veiculos veiculos) {
+    public void setVeiculo(Veiculo veiculos) {
         this.veiculos = veiculos;
     }
 

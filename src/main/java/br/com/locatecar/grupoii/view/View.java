@@ -44,6 +44,7 @@ public class View {
 			System.out.println("2 - Agencias");
 			System.out.println("3 - Clientes");
 			System.out.println("4 - Registrar Aluguel");
+			System.out.println("5 - Registrar Devolução");
 			System.out.println("0 - Sair");
 			
 			switch(scanner.nextLine()) {
@@ -51,6 +52,7 @@ public class View {
 				case "2" -> this.menuAgencia();
 				case "3" -> this.menuClientes();
 				case "4" -> this.menuRegistrarAluguel();
+				case "5" -> this.menuRegistrarDevolucao();
 				case "0" -> {System.out.println("Obrigado por utilizar nosso sistema :)");
 							retornoMenu = false;}
 				default -> System.out.println("Ops, opção inválida!");
@@ -722,6 +724,28 @@ public class View {
 				default -> System.out.println("Ops, opção inválida!");
 			}
 		}while(retornoMenu);
+	}
+
+	public void menuRegistrarDevolucao() {
+
+		System.out.println(" ..: Menu Devolução Veiculos :..");
+
+		Boolean continuarMenu = true;
+
+		do {
+
+			System.out.println("Qual o veiculo deseja registrar a devolução? ");
+
+			// if veiculo nao encontrado -> erro
+			// if veiculo ja devolvido -> erro
+
+			System.out.println("Qual a data da devolução?");
+
+			// calculo desconto pessoa fisica ou juridica
+			System.out.println("O valor total do aluguel ficou: ");
+
+		} while (continuarMenu);
+
 	}
 
 }
