@@ -1,5 +1,8 @@
 package br.com.locatecar.grupoii.view;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,6 +10,10 @@ import br.com.locatecar.grupoii.agencia.controller.AgenciaController;
 import br.com.locatecar.grupoii.agencia.dto.AgenciaDto;
 import br.com.locatecar.grupoii.agencia.model.Agencia;
 import br.com.locatecar.grupoii.agencia.service.AgenciaService;
+import br.com.locatecar.grupoii.dto.SolicitacaoDevolucaoDTO;
+import br.com.locatecar.grupoii.model.Devolucao;
+import br.com.locatecar.grupoii.service.DevolucaoService;
+import br.com.locatecar.grupoii.service.impl.DevolucaoServiceImpl;
 import br.com.locatecar.grupoii.util.SiglasEstados;
 import br.com.locatecar.grupoii.util.ValidaEntrada;
 import br.com.locatecar.grupoii.veiculos.controller.CaminhaoController;
@@ -30,6 +37,8 @@ import br.com.locatecar.grupoii.veiculos.util.ValidaVeiculos;
 public class View {
 	static Scanner scanner = new Scanner(System.in);
 	static Boolean retornoMenu = true;
+
+	private DevolucaoService devolucaoService = new DevolucaoServiceImpl();
 	
 	
 	// MENU PRINCIPAL
@@ -728,23 +737,38 @@ public class View {
 
 	public void menuRegistrarDevolucao() {
 
-		System.out.println(" ..: Menu Devolução Veiculos :..");
+		System.out.println(" ..: Devolução Veiculos :..");
 
-		Boolean continuarMenu = true;
+		SolicitacaoDevolucaoDTO solicitacaoDevolucaoDTO = new SolicitacaoDevolucaoDTO();
 
-		do {
+		DateTimeFormatter formatoDiaMesAno = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter formatoDiaMesAnoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-			System.out.println("Qual o veiculo deseja registrar a devolução? ");
+		try {
 
-			// if veiculo nao encontrado -> erro
-			// if veiculo ja devolvido -> erro
+			System.out.println("Digite seu cpf ou cnpj: ");
+			solicitacaoDevolucaoDTO.setCpfCnpjCliente(scanner.nextLine());
 
-			System.out.println("Qual a data da devolução?");
+			System.out.println("Digite a placa veiculo que deseja registrar a devolução: ");
+			solicitacaoDevolucaoDTO.setPlacaVeiculo(scanner.nextLine());
 
-			// calculo desconto pessoa fisica ou juridica
-			System.out.println("O valor total do aluguel ficou: ");
+			System.out.println("Digite o logradouro da Agencia: ");
+			solicitacaoDevolucaoDTO.setLogradouroAgencia(scanner.nextLine());
 
-		} while (continuarMenu);
+			System.out.println("Digite a data do aluguel no formato DD/MM/AAAA, Ex.: 15/12/2022 ");
+			solicitacaoDevolucaoDTO.setDataAluguel(LocalDate.parse(scanner.nextLine(), formatoDiaMesAno));
+
+			System.out.println("Digite a data e hora da devolução no formato DD/MM/AAAA hh:mm:ss, " +
+					"Ex.: 15/12/2022 10:40:00 ");
+			solicitacaoDevolucaoDTO.setDataHoraDevolucao(LocalDateTime.parse(scanner.nextLine(), formatoDiaMesAnoHora));
+
+			Devolucao devolucaoRegistrada = devolucaoService.registrarDevolucao(solicitacaoDevolucaoDTO);
+
+			System.out.println("O valor total do aluguel ficou: " + devolucaoRegistrada.getTotalAPagar());
+
+		} catch (Exception e) {
+			System.out.println("Ocorreu um erro ao registrar a devolução: " + e.getMessage());
+		}
 
 	}
 

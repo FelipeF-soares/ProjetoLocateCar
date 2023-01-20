@@ -42,6 +42,7 @@ public class DevolucaoServiceImpl implements DevolucaoService {
             atualizarDisponibilidadeVeiculo(veiculo);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw e;
         }
 
         List<Devolucao> devolucoes = UtilArquivos.lerArquivo(CAMINHO_ARQUIVO_DEVOLUCOES, Devolucao.class);
