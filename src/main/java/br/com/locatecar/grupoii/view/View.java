@@ -1,5 +1,8 @@
 package br.com.locatecar.grupoii.view;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,6 +10,11 @@ import br.com.locatecar.grupoii.agencia.controller.AgenciaController;
 import br.com.locatecar.grupoii.agencia.dto.AgenciaDto;
 import br.com.locatecar.grupoii.agencia.model.Agencia;
 import br.com.locatecar.grupoii.agencia.service.AgenciaService;
+import br.com.locatecar.grupoii.dto.SolicitacaoComprovanteDTO;
+import br.com.locatecar.grupoii.dto.SolicitacaoDevolucaoDTO;
+import br.com.locatecar.grupoii.model.Devolucao;
+import br.com.locatecar.grupoii.service.DevolucaoService;
+import br.com.locatecar.grupoii.service.impl.DevolucaoServiceImpl;
 import br.com.locatecar.grupoii.util.SiglasEstados;
 import br.com.locatecar.grupoii.util.ValidaEntrada;
 import br.com.locatecar.grupoii.veiculos.controller.CaminhaoController;
@@ -15,17 +23,17 @@ import br.com.locatecar.grupoii.veiculos.controller.MotoController;
 import br.com.locatecar.grupoii.veiculos.dto.CaminhaoDto;
 import br.com.locatecar.grupoii.veiculos.dto.CarroDto;
 import br.com.locatecar.grupoii.veiculos.dto.MotoDto;
-import br.com.locatecar.grupoii.veiculos.model.Caminhao;
-import br.com.locatecar.grupoii.veiculos.model.Carro;
-import br.com.locatecar.grupoii.veiculos.model.Moto;
-import br.com.locatecar.grupoii.veiculos.service.CaminhaoService;
-import br.com.locatecar.grupoii.veiculos.service.CarroService;
-import br.com.locatecar.grupoii.veiculos.service.MotoService;
+import br.com.locatecar.grupoii.veiculos.model.*;
+import br.com.locatecar.grupoii.veiculos.service.*;
+import br.com.locatecar.grupoii.veiculos.util.Alugavel;
 import br.com.locatecar.grupoii.veiculos.util.ValidaVeiculos;
 
 public class View {
 	static Scanner scanner = new Scanner(System.in);
 	static Boolean retornoMenu = true;
+
+	private DevolucaoService devolucaoService = new DevolucaoServiceImpl();
+	private Alugavel aluguelService = new AlugarService();
 	
 	
 	// MENU PRINCIPAL
@@ -40,6 +48,7 @@ public class View {
 			System.out.println("2 - Agencias");
 			System.out.println("3 - Clientes");
 			System.out.println("4 - Registrar Aluguel");
+			System.out.println("5 - Registrar Devolução");
 			System.out.println("0 - Sair");
 			
 			switch(scanner.nextLine()) {
@@ -47,6 +56,7 @@ public class View {
 				case "2" -> this.menuAgencia();
 				case "3" -> this.menuClientes();
 				case "4" -> this.menuRegistrarAluguel();
+				case "5" -> this.menuRegistrarDevolucao();
 				case "0" -> {System.out.println("Obrigado por utilizar nosso sistema :)");
 							retornoMenu = false;}
 				default -> System.out.println("Ops, opção inválida!");
@@ -584,10 +594,253 @@ public class View {
 	// FIM DOS METODOS DO MENU AGÊNCIA
 	
     public void menuClientes() {
+		do {
+			;
+			System.out.println("1 - Cadastrar Pessoa Física");
+			System.out.println("2 - Cadastrar Pessoa Jurídica");
+			System.out.println("3 - Alterar Pessoa Física");
+			System.out.println("4 - Alterar Pessoa Jurídica");
+			System.out.println("0 - Sair");
+
+			switch(scanner.nextLine()) {
+				case "1" -> this.adicionarPessoaFisica();
+				case "2" -> this.adicionarPessoaJuridica();
+				case "3" -> this.alterarPessoaFisica();
+				case "4" -> this.menuRegistrarAluguel();
+				case "0" -> {System.out.println("Obrigado por utilizar nosso sistema :)");
+					retornoMenu = false;}
+				default -> System.out.println("Ops, opção inválida!");
+			}
+		}while(retornoMenu);
 		
 	}
+	public void adicionarPessoaFisica(){
+		boolean sair = true;
+
+		do {
+			PessoaFisica pessoaFisica = new PessoaFisica();
+
+			System.out.println("Digite seu nome completo");
+			pessoaFisica.setNomeCliente(scanner.nextLine());
+
+			System.out.println("Digite seu CPF");
+			pessoaFisica.setCpf(scanner.nextLine());
+
+			List<PessoaFisica> listaPessoaFisicas = new PessoaFisicaService().listarCliente();
+			listaPessoaFisicas.add(pessoaFisica);
+			new PessoaFisicaService().adicionarCliente(listaPessoaFisicas);
+
+			System.out.println("Deseja realizar outra cadastro?");
+			System.out.println("1 - sim!");
+			System.out.println("2 - não!");
+
+			switch (scanner.nextLine()){
+				case "1" -> System.out.println("Digite outro Cliente!");
+				default -> sair = false;
+			}
+		}while (sair);
+	}
+
+	public void adicionarPessoaJuridica(){
+		boolean sair = true;
+
+		do {
+			PessoaJuridica pessoaJuridica = new PessoaJuridica();
+
+			System.out.println("Digite seu nome completo");
+			pessoaJuridica.setNomeCliente(scanner.nextLine());
+
+			System.out.println("Digite seu CNPJ");
+			pessoaJuridica.setCnpj(scanner.nextLine());
+
+			List<PessoaJuridica> listaPessoaJuridica = new PessoaJuridicaService().listarCliente();
+			listaPessoaJuridica.add(pessoaJuridica);
+			new PessoaJuridicaService().adicionarCliente(listaPessoaJuridica);
+
+
+			System.out.println("Deseja realizar outra cadastro?");
+			System.out.println("1 - sim!");
+			System.out.println("2 - não!");
+
+			switch (scanner.nextLine()){
+				case "1" -> System.out.println("Digite outro Cliente!");
+				default -> sair = false;
+			}
+		}while (sair);
+	}
+
+	public void alterarPessoaFisica(){
+		boolean sair = true;
+		PessoaFisica pessoaFisica = new PessoaFisica();
+
+		do {
+			System.out.println("Digite o CPF!");
+			String cpf = scanner.nextLine();
+			PessoaFisicaService pessoaService = new PessoaFisicaService();
+			List<PessoaFisica> listaPessoaFisicas = pessoaService.localizarCliente(cpf);
+
+
+			if (listaPessoaFisicas.isEmpty() ) {
+				System.out.println("CPF não encontrado!");
+			}else {
+				System.out.println("Digite o nome do cliente!");
+				pessoaFisica.setNomeCliente(scanner.nextLine());
+				pessoaFisica.setCpf(cpf);
+				List<PessoaFisica> pessoaFisicas = pessoaService.listarCliente();
+				System.out.println(pessoaFisicas);
+
+				for (int i = 0; i < pessoaFisicas.size(); i++){
+					if (pessoaFisicas.get(i).getCpf().equals(cpf)){
+						pessoaFisicas.set(i, pessoaFisica);
+					}
+				}
+				pessoaService.adicionarCliente(pessoaFisicas);
+			}
+
+			new PessoaFisicaService().adicionarCliente(listaPessoaFisicas);
+
+			System.out.println("Deseja realizar outra cadastro?");
+			System.out.println("1 - sim!");
+			System.out.println("2 - não!");
+
+			switch (scanner.nextLine()){
+				case "1" -> System.out.println("Digite outro Cliente!");
+				default -> sair = false;
+			}
+		}while (sair);
+	}
     public void menuRegistrarAluguel() {
-		
+		do {
+			System.out.println("Menu Principal");
+			System.out.println("1 - Veículos");
+			System.out.println("2 - Agencias");
+			System.out.println("3 - Clientes");
+			System.out.println("4 - Registrar Aluguel");
+			System.out.println("0 - Sair");
+
+			switch(scanner.nextLine()) {
+				case "1" -> this.menuVeiculos();
+				case "2" -> this.menuAgencia();
+				case "3" -> this.menuClientes();
+				case "4" -> this.menuRegistrarAluguel();
+				case "0" -> {System.out.println("Obrigado por utilizar nosso sistema :)");
+					retornoMenu = false;}
+				default -> System.out.println("Ops, opção inválida!");
+			}
+		}while(retornoMenu);
+	}
+
+	public void menuRegistrarDevolucao() {
+
+		System.out.println(" ..: Devolução Veiculos :..");
+
+		SolicitacaoDevolucaoDTO solicitacaoDevolucaoDTO = new SolicitacaoDevolucaoDTO();
+
+		DateTimeFormatter formatoDiaMesAno = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter formatoDiaMesAnoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+		try {
+
+			System.out.println("Digite seu cpf ou cnpj: ");
+			solicitacaoDevolucaoDTO.setCpfCnpjCliente(scanner.nextLine());
+
+			System.out.println("Digite a placa veiculo que deseja registrar a devolução: ");
+			solicitacaoDevolucaoDTO.setPlacaVeiculo(scanner.nextLine());
+
+			System.out.println("Digite o logradouro da Agencia: ");
+			solicitacaoDevolucaoDTO.setLogradouroAgencia(scanner.nextLine());
+
+			System.out.println("Digite a data do aluguel no formato DD/MM/AAAA, Ex.: 15/12/2022 ");
+			solicitacaoDevolucaoDTO.setDataAluguel(LocalDate.parse(scanner.nextLine(), formatoDiaMesAno));
+
+			System.out.println("Digite a data e hora da devolução no formato DD/MM/AAAA hh:mm:ss, " +
+					"Ex.: 15/12/2022 10:40:00 ");
+			solicitacaoDevolucaoDTO.setDataHoraDevolucao(LocalDateTime.parse(scanner.nextLine(), formatoDiaMesAnoHora));
+
+			Devolucao devolucaoRegistrada = devolucaoService.registrarDevolucao(solicitacaoDevolucaoDTO);
+
+			System.out.println("O valor total do aluguel ficou: " + devolucaoRegistrada.getTotalAPagar());
+
+		} catch (Exception e) {
+			System.out.println("Ocorreu um erro ao registrar a devolução: " + e.getMessage());
+		}
+
+	}
+
+	public void menuGerarComprovante() {
+
+		Boolean continuarMenu = true;
+
+		System.out.println("..:    Menu Comprovantes   :..");
+
+		do {
+
+			System.out.println("Escolha uma opção para realizar abaixo: ");
+			System.out.println("1 - Gerar comprovante de aluguel");
+			System.out.println("2 - Gerar comprovante de devolução");
+			System.out.println("0 - Sair");
+
+			switch(scanner.nextLine()) {
+				case "1" -> comprovanteDevolucao();
+				case "2" -> comprovanteAluguel();
+				case "0" -> continuarMenu = false;
+				default -> System.out.println("Ops, opção inválida!");
+			}
+
+		} while(continuarMenu);
+	}
+
+	public void comprovanteDevolucao() {
+
+		System.out.println("..:    Comprovante de devolução   :..");
+		SolicitacaoComprovanteDTO solicitacaoComprovanteDTO = new SolicitacaoComprovanteDTO();
+		DateTimeFormatter formatoDiaMesAno = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		try {
+
+			System.out.println("Digite o cpf ou cnpj: ");
+			solicitacaoComprovanteDTO.setCpfCnpjCliente(scanner.nextLine());
+
+			System.out.println("Digite a placa veiculo que deseja o comprovante de devolução: ");
+			solicitacaoComprovanteDTO.setPlacaVeiculo(scanner.nextLine());
+
+			System.out.println("Digite a data do aluguel no formato DD/MM/AAAA, Ex.: 15/12/2022 ");
+			solicitacaoComprovanteDTO.setDataAluguel(LocalDate.parse(scanner.nextLine(), formatoDiaMesAno));
+
+			Devolucao devolucaoEncontrada = devolucaoService.consultarDevolucao(solicitacaoComprovanteDTO);
+
+			System.out.println(devolucaoEncontrada);
+
+		} catch (Exception e) {
+			System.out.println("Erro ao gerar comprovante de devolução: " + e.getMessage());
+		}
+	}
+
+	public void comprovanteAluguel() {
+
+		System.out.println("..:    Comprovante de aluguel   :..");
+		DateTimeFormatter formatoDiaMesAno = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		try {
+
+			System.out.println("Digite o cpf ou cnpj: ");
+			String cpfCnpj = scanner.nextLine();
+
+			System.out.println("Digite a placa veiculo que deseja o comprovante de aluguel: ");
+			String placa = scanner.nextLine();
+
+			System.out.println("Digite a data do aluguel no formato DD/MM/AAAA, Ex.: 15/12/2022 ");
+			LocalDate dataAluguel = LocalDate.parse(scanner.nextLine(), formatoDiaMesAno);
+
+			Aluguel aluguel = aluguelService.consultarAluguel(cpfCnpj, placa, dataAluguel);
+
+			System.out.println(aluguel);
+
+		} catch (Exception e) {
+			System.out.println("Erro ao gerar comprovante de aluguel: " + e.getMessage());
+		}
+
+
 	}
 
 }
