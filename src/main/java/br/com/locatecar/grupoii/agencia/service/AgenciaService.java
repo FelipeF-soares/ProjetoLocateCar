@@ -12,6 +12,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import br.com.locatecar.grupoii.agencia.model.Agencia;
+import br.com.locatecar.grupoii.veiculos.model.Caminhao;
+import br.com.locatecar.grupoii.veiculos.model.Carro;
+import br.com.locatecar.grupoii.veiculos.model.Moto;
+import br.com.locatecar.grupoii.veiculos.service.CaminhaoService;
+import br.com.locatecar.grupoii.veiculos.service.CarroService;
+import br.com.locatecar.grupoii.veiculos.service.MotoService;
 
 public class AgenciaService {
 	
@@ -65,6 +71,42 @@ public class AgenciaService {
 		
 		return listaDeCorrespondentes;
 	}
+	
+	public Agencia adicionaListaVeiculo( Agencia agencia) {
+		List<Carro> listaCarro = new CarroService().listar();
+		List<Moto> listaMoto = new MotoService().listar();
+		List<Caminhao> listaCaminhao = new CaminhaoService().listar();
+		
+		List<Carro> listaDeCarrosEncontrados = new ArrayList<Carro>();
+		List<Moto> listaDeMotosEncontrados = new ArrayList<Moto>();
+		List<Caminhao> listaDeCaminhaoEncontrado = new ArrayList<Caminhao>();
+		
+		for(int i = 0; i <listaCarro.size(); i++) {
+			if(listaCarro.get(i).getIdAgencia().equals(agencia.getId())){
+				listaDeCarrosEncontrados.add(listaCarro.get(i));
+			}
+		}
+		
+		for(int i = 0; i < listaMoto.size(); i++) {
+			if(listaMoto.get(i).getIdAgencia().equals(agencia.getId())) {
+				listaDeMotosEncontrados.add(listaMoto.get(i));
+			}
+		}
+		
+		for(int i = 0; i < listaCaminhao.size();i++) {
+			if(listaCaminhao.get(i).getIdAgencia().equals(agencia.getId())) {
+				listaDeCaminhaoEncontrado.add(listaCaminhao.get(i));
+			}
+		}
+		
+		 agencia.setListaDeCarros(listaDeCarrosEncontrados);
+		 agencia.setListaDeMotos(listaDeMotosEncontrados);
+		 agencia.setListaCaminhao(listaDeCaminhaoEncontrado);
+		 return agencia;
+		
+		
+	}
+	
 }
 
 

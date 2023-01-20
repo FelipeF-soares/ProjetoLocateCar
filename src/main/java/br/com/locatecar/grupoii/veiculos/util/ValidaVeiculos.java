@@ -98,9 +98,10 @@ public class ValidaVeiculos {
 		if(placa.isBlank()||placa.isEmpty()) {
 			throw new ValorVazioOuNulo();
 		}else{
-			if(carroService.localizar(placa).contains(placa)
-					|| motoService.localizar(placa).contains(placa)
-					|| caminhaoService.localizar(placa).contains(placa)) 
+			
+			if(!carroService.localizar(placa).isEmpty() 
+					|| !motoService.localizar(placa).isEmpty() 
+					|| !caminhaoService.localizar(placa).isEmpty()) 
 			{
 				return placa;
 			}else {
@@ -109,5 +110,12 @@ public class ValidaVeiculos {
 		}
 	}
 	
+	public String localizaParteVeiculo(String parteVeiculo) throws ValorVazioOuNulo {
+		parteVeiculo = parteVeiculo.toUpperCase().trim();
+		if(parteVeiculo.isBlank()||parteVeiculo.isEmpty()) {
+			throw new ValorVazioOuNulo();
+		}
+		return parteVeiculo;
+	}
 
 }

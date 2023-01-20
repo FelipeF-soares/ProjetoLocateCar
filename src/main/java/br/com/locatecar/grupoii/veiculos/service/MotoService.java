@@ -101,6 +101,13 @@ public class MotoService implements CrudVeiculos<Moto> {
 
 	@Override
 	public void editar(String placa, Moto veiculo) {
+		List<Moto> listar = this.listar();
+		for(int i =0; i<listar.size(); i++) {
+			if(listar.get(i).getPlaca().equals(placa)) {
+				listar.set(i, veiculo);
+			}
+		}
+		this.adicionar(listar);
 	}
 
 	@Override

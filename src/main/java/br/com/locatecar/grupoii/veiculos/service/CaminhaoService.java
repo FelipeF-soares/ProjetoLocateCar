@@ -103,6 +103,13 @@ public class CaminhaoService implements CrudVeiculos<Caminhao> {
 
 	@Override
 	public void editar(String placa, Caminhao veiculo) {
+		List<Caminhao> listar = this.listar();
+		for(int i = 0; i<listar.size();i++) {
+			if(listar.get(i).getPlaca().equals(placa)) {
+				listar.set(i, veiculo);
+			}
+		}
+		this.adicionar(listar);
 	}
 
 	@Override
