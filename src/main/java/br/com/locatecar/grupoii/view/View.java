@@ -23,16 +23,9 @@ import br.com.locatecar.grupoii.veiculos.controller.MotoController;
 import br.com.locatecar.grupoii.veiculos.dto.CaminhaoDto;
 import br.com.locatecar.grupoii.veiculos.dto.CarroDto;
 import br.com.locatecar.grupoii.veiculos.dto.MotoDto;
-import br.com.locatecar.grupoii.veiculos.model.Caminhao;
-import br.com.locatecar.grupoii.veiculos.model.Carro;
-import br.com.locatecar.grupoii.veiculos.model.PessoaFisica;
-import br.com.locatecar.grupoii.veiculos.model.PessoaJuridica;
-import br.com.locatecar.grupoii.veiculos.service.PessoaFisicaService;
-import br.com.locatecar.grupoii.veiculos.service.PessoaJuridicaService;
-import br.com.locatecar.grupoii.veiculos.model.Moto;
-import br.com.locatecar.grupoii.veiculos.service.CaminhaoService;
-import br.com.locatecar.grupoii.veiculos.service.CarroService;
-import br.com.locatecar.grupoii.veiculos.service.MotoService;
+import br.com.locatecar.grupoii.veiculos.model.*;
+import br.com.locatecar.grupoii.veiculos.service.*;
+import br.com.locatecar.grupoii.veiculos.util.Alugavel;
 import br.com.locatecar.grupoii.veiculos.util.ValidaVeiculos;
 
 public class View {
@@ -40,6 +33,7 @@ public class View {
 	static Boolean retornoMenu = true;
 
 	private DevolucaoService devolucaoService = new DevolucaoServiceImpl();
+	private Alugavel aluguelService = new AlugarService();
 	
 	
 	// MENU PRINCIPAL
@@ -825,6 +819,27 @@ public class View {
 	public void comprovanteAluguel() {
 
 		System.out.println("..:    Comprovante de aluguel   :..");
+		DateTimeFormatter formatoDiaMesAno = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		try {
+
+			System.out.println("Digite o cpf ou cnpj: ");
+			String cpfCnpj = scanner.nextLine();
+
+			System.out.println("Digite a placa veiculo que deseja o comprovante de aluguel: ");
+			String placa = scanner.nextLine();
+
+			System.out.println("Digite a data do aluguel no formato DD/MM/AAAA, Ex.: 15/12/2022 ");
+			LocalDate dataAluguel = LocalDate.parse(scanner.nextLine(), formatoDiaMesAno);
+
+			Aluguel aluguel = aluguelService.consultarAluguel(cpfCnpj, placa, dataAluguel);
+
+			System.out.println(aluguel);
+
+		} catch (Exception e) {
+			System.out.println("Erro ao gerar comprovante de aluguel: " + e.getMessage());
+		}
+
 
 	}
 
