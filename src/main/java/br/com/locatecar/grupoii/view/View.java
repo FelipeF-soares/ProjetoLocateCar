@@ -13,6 +13,10 @@ import br.com.locatecar.grupoii.erros.ValorVazioOuNulo;
 import br.com.locatecar.grupoii.veiculos.controller.CarroController;
 import br.com.locatecar.grupoii.veiculos.dto.CarroDto;
 import br.com.locatecar.grupoii.veiculos.model.Carro;
+import br.com.locatecar.grupoii.veiculos.model.PessoaFisica;
+import br.com.locatecar.grupoii.veiculos.model.PessoaJuridica;
+import br.com.locatecar.grupoii.veiculos.service.PessoaFisicaService;
+import br.com.locatecar.grupoii.veiculos.service.PessoaJuridicaService;
 import br.com.locatecar.grupoii.veiculos.util.ValidaVeiculos;
 
 public class View {
@@ -270,10 +274,140 @@ public class View {
 	}
 
     public void menuClientes() {
+		do {
+			;
+			System.out.println("1 - Cadastrar Pessoa Física");
+			System.out.println("2 - Cadastrar Pessoa Jurídica");
+			System.out.println("3 - Alterar Pessoa Física");
+			System.out.println("4 - Alterar Pessoa Jurídica");
+			System.out.println("0 - Sair");
+
+			switch(scanner.nextLine()) {
+				case "1" -> this.adicionarPessoaFisica();
+				case "2" -> this.adicionarPessoaJuridica();
+				case "3" -> this.alterarPessoaFisica();
+				case "4" -> this.menuRegistrarAluguel();
+				case "0" -> {System.out.println("Obrigado por utilizar nosso sistema :)");
+					retornoMenu = false;}
+				default -> System.out.println("Ops, opção inválida!");
+			}
+		}while(retornoMenu);
 		
 	}
+	public void adicionarPessoaFisica(){
+		boolean sair = true;
+
+		do {
+			PessoaFisica pessoaFisica = new PessoaFisica();
+
+			System.out.println("Digite seu nome completo");
+			pessoaFisica.setNomeCliente(scanner.nextLine());
+
+			System.out.println("Digite seu CPF");
+			pessoaFisica.setCpf(scanner.nextLine());
+
+			List<PessoaFisica> listaPessoaFisicas = new PessoaFisicaService().listarCliente();
+			listaPessoaFisicas.add(pessoaFisica);
+			new PessoaFisicaService().adicionarCliente(listaPessoaFisicas);
+
+			System.out.println("Deseja realizar outra cadastro?");
+			System.out.println("1 - sim!");
+			System.out.println("2 - não!");
+
+			switch (scanner.nextLine()){
+				case "1" -> System.out.println("Digite outro Cliente!");
+				default -> sair = false;
+			}
+		}while (sair);
+	}
+
+	public void adicionarPessoaJuridica(){
+		boolean sair = true;
+
+		do {
+			PessoaJuridica pessoaJuridica = new PessoaJuridica();
+
+			System.out.println("Digite seu nome completo");
+			pessoaJuridica.setNomeCliente(scanner.nextLine());
+
+			System.out.println("Digite seu CNPJ");
+			pessoaJuridica.setCnpj(scanner.nextLine());
+
+			List<PessoaJuridica> listaPessoaJuridica = new PessoaJuridicaService().listarCliente();
+			listaPessoaJuridica.add(pessoaJuridica);
+			new PessoaJuridicaService().adicionarCliente(listaPessoaJuridica);
+
+
+			System.out.println("Deseja realizar outra cadastro?");
+			System.out.println("1 - sim!");
+			System.out.println("2 - não!");
+
+			switch (scanner.nextLine()){
+				case "1" -> System.out.println("Digite outro Cliente!");
+				default -> sair = false;
+			}
+		}while (sair);
+	}
+
+	public void alterarPessoaFisica(){
+		boolean sair = true;
+		PessoaFisica pessoaFisica = new PessoaFisica();
+
+		do {
+			System.out.println("Digite o CPF!");
+			String cpf = scanner.nextLine();
+			PessoaFisicaService pessoaService = new PessoaFisicaService();
+			List<PessoaFisica> listaPessoaFisicas = pessoaService.localizarCliente(cpf);
+
+
+			if (listaPessoaFisicas.isEmpty() ) {
+				System.out.println("CPF não encontrado!");
+			}else {
+				System.out.println("Digite o nome do cliente!");
+				pessoaFisica.setNomeCliente(scanner.nextLine());
+				pessoaFisica.setCpf(cpf);
+				List<PessoaFisica> pessoaFisicas = pessoaService.listarCliente();
+				System.out.println(pessoaFisicas);
+
+				for (int i = 0; i < pessoaFisicas.size(); i++){
+					if (pessoaFisicas.get(i).getCpf().equals(cpf)){
+						pessoaFisicas.set(i, pessoaFisica);
+					}
+				}
+				pessoaService.adicionarCliente(pessoaFisicas);
+			}
+
+			new PessoaFisicaService().adicionarCliente(listaPessoaFisicas);
+
+			System.out.println("Deseja realizar outra cadastro?");
+			System.out.println("1 - sim!");
+			System.out.println("2 - não!");
+
+			switch (scanner.nextLine()){
+				case "1" -> System.out.println("Digite outro Cliente!");
+				default -> sair = false;
+			}
+		}while (sair);
+	}
     public void menuRegistrarAluguel() {
-		
+		do {
+			System.out.println("Menu Principal");
+			System.out.println("1 - Veículos");
+			System.out.println("2 - Agencias");
+			System.out.println("3 - Clientes");
+			System.out.println("4 - Registrar Aluguel");
+			System.out.println("0 - Sair");
+
+			switch(scanner.nextLine()) {
+				case "1" -> this.menuVeiculos();
+				case "2" -> this.menuAgencia();
+				case "3" -> this.menuClientes();
+				case "4" -> this.menuRegistrarAluguel();
+				case "0" -> {System.out.println("Obrigado por utilizar nosso sistema :)");
+					retornoMenu = false;}
+				default -> System.out.println("Ops, opção inválida!");
+			}
+		}while(retornoMenu);
 	}
 
 }

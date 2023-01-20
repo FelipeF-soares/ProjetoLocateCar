@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 
 public class AlugarService implements Alugavel {
-    static Path path = Paths.get("D:\\Ada\\SantanderCoder\\ModuloIII\\Projetos\\LocateCar\\locatecar\\src\\main\\java\\arquivos\\caminhao.txt");
+    static Path path = Paths.get("C:\\Users\\agame\\IdeaProjects\\ProjetoLocateCar\\src\\main\\java\\arquivos\\registroAlugel.txt");
 
 
     @Override
