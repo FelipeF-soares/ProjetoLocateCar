@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "placa": "DME-6191",
+    "tipoVeiculo": "MOTO",
+    "statusVeiculo": "DISPONIVEL",
+    "marca": "YAMAHA",
+    "modelo": "FAZER 150",
+    "anoDeFabricao": 2022,
+    "IdAgencia": 1
+  }
+]

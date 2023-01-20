@@ -1,20 +1,110 @@
 [
   {
     "id": 0,
-    "nomeAgencia": "Unidade São Paulo",
+    "nomeAgencia": "AGÊNCIA SÃO PAULO",
     "endereco": {
-      "logradouro": "Avenida Amador Bueno da Veiga",
+      "logradouro": "AVENIDA AMADOR BUENO DA VEIGA",
       "numero": "2774",
       "siglasEstados": "SP"
-    }
+    },
+    "listaDeCarros": [
+      {
+        "placa": "HHX-7985",
+        "tipoVeiculo": "CARRO",
+        "statusVeiculo": "DISPONIVEL",
+        "marca": "FIAT",
+        "modelo": "IDEIA",
+        "anoDeFabricao": 2014,
+        "IdAgencia": 0
+      }
+    ],
+    "listaDeMotos": [],
+    "listaCaminhao": []
   },
   {
     "id": 1,
-    "nomeAgencia": "Unidade Rio de Janeiro",
+    "nomeAgencia": "AGÊNCIA RIO DE JANEIRO",
     "endereco": {
-      "logradouro": "Avenida Brasil",
-      "numero": "1001",
+      "logradouro": "RUA DE IPANEMA",
+      "numero": "96",
       "siglasEstados": "RJ"
-    }
+    },
+    "listaDeCarros": [
+      {
+        "placa": "DME-6091",
+        "tipoVeiculo": "CARRO",
+        "statusVeiculo": "DISPONIVEL",
+        "marca": "FIAT",
+        "modelo": "PALIO",
+        "anoDeFabricao": 2014,
+        "IdAgencia": 1
+      }
+    ],
+    "listaDeMotos": [
+      {
+        "placa": "DME-6191",
+        "tipoVeiculo": "MOTO",
+        "statusVeiculo": "DISPONIVEL",
+        "marca": "YAMAHA",
+        "modelo": "FAZER 150",
+        "anoDeFabricao": 2022,
+        "IdAgencia": 1
+      }
+    ],
+    "listaCaminhao": [
+      {
+        "placa": "ZZZ-9999",
+        "tipoVeiculo": "CAMINHAO",
+        "statusVeiculo": "DISPONIVEL",
+        "marca": "VOLVO",
+        "modelo": "AB123",
+        "anoDeFabricao": 2000,
+        "IdAgencia": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nomeAgencia": "AGÊNCIA SALVADOR",
+    "endereco": {
+      "logradouro": "RUA DA PRAIA",
+      "numero": "96",
+      "siglasEstados": "BA"
+    },
+    "listaDeCarros": [],
+    "listaDeMotos": [],
+    "listaCaminhao": [
+      {
+        "placa": "DJL-5569",
+        "tipoVeiculo": "CAMINHAO",
+        "statusVeiculo": "DISPONIVEL",
+        "marca": "SCANIA",
+        "modelo": "SE500",
+        "anoDeFabricao": 2022,
+        "IdAgencia": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nomeAgencia": "AGÊNCIA FORTALEZA",
+    "endereco": {
+      "logradouro": "RUA COQUEIRO",
+      "numero": "125",
+      "siglasEstados": "CE"
+    },
+    "listaDeCarros": [
+      {
+        "placa": "DJL-2598",
+        "tipoVeiculo": "CARRO",
+        "statusVeiculo": "DISPONIVEL",
+        "marca": "FIAT",
+        "modelo": "STRADA",
+        "anoDeFabricao": 2009,
+        "IdAgencia": 3
+      }
+    ],
+    "listaDeMotos": [],
+    "listaCaminhao": []
   }
 ]

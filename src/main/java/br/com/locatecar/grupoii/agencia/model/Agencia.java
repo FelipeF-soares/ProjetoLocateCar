@@ -17,13 +17,14 @@ public class Agencia {
 	private List<Moto> listaDeMotos;
 	private List<Caminhao> listaCaminhao;
 	
-	public Agencia() {
-		
-	}
+	
 	public void setId () {
 		AgenciaService agenciaService = new AgenciaService();
 		List<Agencia> listar = agenciaService.listar();
 		this.id = listar.size();
+	}
+	public void setId (Integer id) {
+		this.id = id;
 	}
 	
 	public Integer getId() {
