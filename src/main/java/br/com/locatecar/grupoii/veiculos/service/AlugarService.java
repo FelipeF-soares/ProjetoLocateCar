@@ -22,7 +22,7 @@ public class AlugarService implements Alugavel {
         Alugel alugel = new Alugel();
         alugel.setVeiculo(veiculos);
         alugel.setCliente(cliente);
-        alugel.setDataAlugel(LocalDate.of(2023,  1,  1));
+        alugel.setDataAlugel(LocalDate.now());
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String saidaVeiculosJson = gson.toJson(alugel);
