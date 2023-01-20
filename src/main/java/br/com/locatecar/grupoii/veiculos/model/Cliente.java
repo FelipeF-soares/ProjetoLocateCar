@@ -35,5 +35,7 @@ public abstract class Cliente {
         this.telefones = telefones;
     }
 
+    public abstract String getIdentificadorUnico();
+
 
 }

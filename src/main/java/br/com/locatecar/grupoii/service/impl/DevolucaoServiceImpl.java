@@ -2,6 +2,7 @@ package br.com.locatecar.grupoii.service.impl;
 
 import br.com.locatecar.grupoii.agencia.model.Agencia;
 import br.com.locatecar.grupoii.agencia.service.AgenciaService;
+import br.com.locatecar.grupoii.dto.SolicitacaoComprovanteDTO;
 import br.com.locatecar.grupoii.dto.SolicitacaoDevolucaoDTO;
 import br.com.locatecar.grupoii.model.Devolucao;
 import br.com.locatecar.grupoii.service.DevolucaoService;
@@ -50,6 +51,32 @@ public class DevolucaoServiceImpl implements DevolucaoService {
         UtilArquivos.salvarArquivo(CAMINHO_ARQUIVO_DEVOLUCOES, devolucoes);
 
         return devolucao;
+    }
+
+    @Override
+    public Devolucao consultarDevolucao(SolicitacaoComprovanteDTO solicitacaoComprovanteDTO) {
+
+        Devolucao devolucaoEncontrada = null;
+
+        List<Devolucao> devolucoes = UtilArquivos.lerArquivo(CAMINHO_ARQUIVO_DEVOLUCOES, Devolucao.class);
+
+        for (Devolucao devolucao : devolucoes) {
+
+            boolean ehMesmoCliente = devolucao.getCliente().getIdentificadorUnico().equals(solicitacaoComprovanteDTO.getCpfCnpjCliente());
+            boolean ehMesmoVeiculo = devolucao.getVeiculo().getPlaca().equals(solicitacaoComprovanteDTO.getPlacaVeiculo());
+            boolean ehMesmaDataAluguel = devolucao.getAluguel().getDataAlugel().equals(solicitacaoComprovanteDTO.getDataAluguel());
+
+            if (ehMesmoCliente && ehMesmoVeiculo && ehMesmaDataAluguel) {
+                devolucaoEncontrada = devolucao;
+                break;
+            }
+        }
+
+        if (devolucaoEncontrada == null) {
+            throw new RuntimeException("Devolução não encontrada!");
+        }
+
+        return devolucaoEncontrada;
     }
 
     private void atualizarDisponibilidadeVeiculo(Veiculo veiculo) {

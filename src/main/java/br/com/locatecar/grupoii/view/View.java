@@ -10,6 +10,7 @@ import br.com.locatecar.grupoii.agencia.controller.AgenciaController;
 import br.com.locatecar.grupoii.agencia.dto.AgenciaDto;
 import br.com.locatecar.grupoii.agencia.model.Agencia;
 import br.com.locatecar.grupoii.agencia.service.AgenciaService;
+import br.com.locatecar.grupoii.dto.SolicitacaoComprovanteDTO;
 import br.com.locatecar.grupoii.dto.SolicitacaoDevolucaoDTO;
 import br.com.locatecar.grupoii.model.Devolucao;
 import br.com.locatecar.grupoii.service.DevolucaoService;
@@ -769,6 +770,61 @@ public class View {
 		} catch (Exception e) {
 			System.out.println("Ocorreu um erro ao registrar a devolução: " + e.getMessage());
 		}
+
+	}
+
+	public void menuGerarComprovante() {
+
+		Boolean continuarMenu = true;
+
+		System.out.println("..:    Menu Comprovantes   :..");
+
+		do {
+
+			System.out.println("Escolha uma opção para realizar abaixo: ");
+			System.out.println("1 - Gerar comprovante de aluguel");
+			System.out.println("2 - Gerar comprovante de devolução");
+			System.out.println("0 - Sair");
+
+			switch(scanner.nextLine()) {
+				case "1" -> comprovanteDevolucao();
+				case "2" -> comprovanteAluguel();
+				case "0" -> continuarMenu = false;
+				default -> System.out.println("Ops, opção inválida!");
+			}
+
+		} while(continuarMenu);
+	}
+
+	public void comprovanteDevolucao() {
+
+		System.out.println("..:    Comprovante de devolução   :..");
+		SolicitacaoComprovanteDTO solicitacaoComprovanteDTO = new SolicitacaoComprovanteDTO();
+		DateTimeFormatter formatoDiaMesAno = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		try {
+
+			System.out.println("Digite o cpf ou cnpj: ");
+			solicitacaoComprovanteDTO.setCpfCnpjCliente(scanner.nextLine());
+
+			System.out.println("Digite a placa veiculo que deseja o comprovante de devolução: ");
+			solicitacaoComprovanteDTO.setPlacaVeiculo(scanner.nextLine());
+
+			System.out.println("Digite a data do aluguel no formato DD/MM/AAAA, Ex.: 15/12/2022 ");
+			solicitacaoComprovanteDTO.setDataAluguel(LocalDate.parse(scanner.nextLine(), formatoDiaMesAno));
+
+			Devolucao devolucaoEncontrada = devolucaoService.consultarDevolucao(solicitacaoComprovanteDTO);
+
+			System.out.println(devolucaoEncontrada);
+
+		} catch (Exception e) {
+			System.out.println("Erro ao gerar comprovante de devolução: " + e.getMessage());
+		}
+	}
+
+	public void comprovanteAluguel() {
+
+		System.out.println("..:    Comprovante de aluguel   :..");
 
 	}
 
