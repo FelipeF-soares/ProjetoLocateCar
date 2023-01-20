@@ -1,6 +1,6 @@
 package br.com.locatecar.grupoii.erros;
 
-public class ValorNumericoInválido extends NumberFormatException {
+public class ValorNumericoInvalido extends NumberFormatException {
 	
 	/**
 	 * 

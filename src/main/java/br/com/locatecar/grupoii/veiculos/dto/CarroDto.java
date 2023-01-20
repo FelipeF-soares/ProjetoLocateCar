@@ -27,6 +27,7 @@ public class CarroDto implements VeiculoDto<Carro> {
 	public String getPlaca() {
 		return placa;
 	}
+
 	public void setPlaca(String placa){
 			this.placa = placa.toUpperCase().trim();
 	}

@@ -8,7 +8,7 @@ import br.com.locatecar.grupoii.agencia.service.AgenciaService;
 import br.com.locatecar.grupoii.erros.ErroDeValorInvalidoDaLista;
 import br.com.locatecar.grupoii.erros.ErroPlacaNaoLocalizada;
 import br.com.locatecar.grupoii.erros.ErroVeiculoJaCadastrado;
-import br.com.locatecar.grupoii.erros.ValorNumericoInválido;
+import br.com.locatecar.grupoii.erros.ValorNumericoInvalido;
 import br.com.locatecar.grupoii.erros.ValorVazioOuNulo;
 import br.com.locatecar.grupoii.veiculos.controller.CarroController;
 import br.com.locatecar.grupoii.veiculos.dto.CarroDto;
@@ -127,7 +127,7 @@ public class View {
 				System.out.println(e.getMessage()+"\n");
 			} catch (ErroVeiculoJaCadastrado e) {
 				System.out.println(e.getMessage()+"\n");
-			} catch (ValorNumericoInválido e) {
+			} catch (ValorNumericoInvalido e) {
 				System.out.println(e.getMessage()+"\n");
 			} catch(ErroDeValorInvalidoDaLista e) {
 				System.out.println(e.getMessage()+"\n");
@@ -201,7 +201,7 @@ public class View {
 				System.out.println(e.getMessage()+"\n");
 			} catch (ErroPlacaNaoLocalizada e) {
 				System.out.println(e.getMessage()+"\n");
-			} catch (ValorNumericoInválido e) {
+			} catch (ValorNumericoInvalido e) {
 				System.out.println(e.getMessage()+"\n");
 			} catch(ErroDeValorInvalidoDaLista e) {
 				System.out.println(e.getMessage()+"\n");

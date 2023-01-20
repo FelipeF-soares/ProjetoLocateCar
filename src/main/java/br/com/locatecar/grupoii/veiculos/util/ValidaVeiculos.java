@@ -7,7 +7,7 @@ import br.com.locatecar.grupoii.agencia.service.AgenciaService;
 import br.com.locatecar.grupoii.erros.ErroDeValorInvalidoDaLista;
 import br.com.locatecar.grupoii.erros.ErroPlacaNaoLocalizada;
 import br.com.locatecar.grupoii.erros.ErroVeiculoJaCadastrado;
-import br.com.locatecar.grupoii.erros.ValorNumericoInválido;
+import br.com.locatecar.grupoii.erros.ValorNumericoInvalido;
 import br.com.locatecar.grupoii.erros.ValorVazioOuNulo;
 import br.com.locatecar.grupoii.veiculos.service.CaminhaoService;
 import br.com.locatecar.grupoii.veiculos.service.CarroService;
@@ -63,7 +63,7 @@ public class ValidaVeiculos {
 				anoDeFabricacao = Integer.valueOf(ano);
 				return anoDeFabricacao;
 			} catch (NumberFormatException e) {
-				throw new ValorNumericoInválido();
+				throw new ValorNumericoInvalido();
 			}
 		}
 	}
@@ -88,7 +88,7 @@ public class ValidaVeiculos {
 				}
 				throw new ErroDeValorInvalidoDaLista();
 			} catch (NumberFormatException e) {
-				throw new ValorNumericoInválido();
+				throw new ValorNumericoInvalido();
 			}
 		}
 	}
