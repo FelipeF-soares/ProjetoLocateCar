@@ -85,6 +85,7 @@ public class CarroService implements CrudVeiculos<Carro> {
 					for(int j = 0; j < veiculosLocalizados.size(); j++) {
 						if(veiculos.get(i).getPlaca().equals(veiculosLocalizados.get(j).getPlaca())) {
 							veiculos.remove(i);
+							System.out.println("Carro Removido!");
 						}
 					}
 				}
@@ -108,15 +109,14 @@ public class CarroService implements CrudVeiculos<Carro> {
 
 	@Override
 	public void editar(String placa, Carro carro) {
-		List<Carro> listaDeLocalizar = this.localizar(placa);
 		List<Carro> listar = this.listar();
 			for(int i = 0; i<listar.size();i++) {
 				if(listar.get(i).getPlaca().equals(placa)) {
-				 listar.add(i, carro);
+				 listar.set(i, carro);
 				}
 			}
 		
-		this.adicionar(listaDeLocalizar);
+		this.adicionar(listar);
 	}
 
 	@Override

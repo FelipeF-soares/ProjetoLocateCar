@@ -15,5 +15,6 @@ public interface CrudVeiculos<T> {
 	public void editar(String placa,T veiculo);
 	
 	public List<T> localizarPorParteDoNome(String modelo);
+	
 
 }
